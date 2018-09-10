@@ -29,7 +29,7 @@ export class HTTP {
         }
       },
       fail: (err) => {
-        this._show_error(1)
+        params.fail && params.fail(err)
       }
     })
   }

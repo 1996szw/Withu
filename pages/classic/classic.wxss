@@ -1,4 +1,11 @@
 /* pages/classic.wxss */
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .header {
   width: 100%;
   display: flex;
@@ -15,6 +22,11 @@
   margin-top: 4rpx;
 }
 
-.like{
+.like {
   margin-top: 6rpx;
+}
+
+.navi {
+  position: absolute;
+  bottom: 40rpx;
 }

@@ -1,6 +1,10 @@
 // pages/classic.js
-import {ClassicModel} from '../../models/classic.js'
-import {LikeModel} from '../../models/like.js'
+import {
+  ClassicModel
+} from '../../models/classic.js'
+import {
+  LikeModel
+} from '../../models/like.js'
 
 let classicModel = new ClassicModel()
 let likeModel = new LikeModel()
@@ -11,7 +15,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classic: null
+    classic: null,
+    latest: true,
+    first: false,
+    likeCount: 0,
+    likeStatus: false
   },
 
   /**
@@ -20,14 +28,47 @@ Page({
   onLoad: function (options) {
     classicModel.getLatest((res) => {
       this.setData({
-        classic: res
+        classic: res,
+        likeCount: res.fav_nums,
+        likeStatus: res.like_status
+      })
+    })
+  },
+  /**
+   * 自定义事件
+   */
+  onLike: function (e) {
+    let behavior = e.detail.behavior
+    likeModel.like(behavior, this.data.classic.id, this.data.classic.type)
+  },
+
+  onPrevious: function () {
+    this._updateClassic('previous')
+  },
+
+  onNext: function () {
+    this._updateClassic('next')
+  },
+
+  _updateClassic: function (nextOrPrevious) {
+    let index = this.data.classic.index
+    classicModel.getClassic(index, nextOrPrevious, (res) => {
+      this._getLikeStatus(res.id, res.type)
+      this.setData({
+        classic: res,
+        latest: classicModel.isLatest(res.index),
+        first: classicModel.isFirst(res.index)
       })
     })
   },
 
-  onLike: function (e) {
-    let behavior = e.detail.behavior
-    likeModel.like(behavior, this.data.classic.id, this.data.classic.type)
+  _getLikeStatus: function (artID,category,sCallback) {
+    likeModel.getClassicLikeStatus(artID, category, (res) => {
+      this.setData({
+        likeCount: res.fav_nums,
+        likeStatus: res.like_status
+      })
+    })
   },
 
   /**

@@ -1,6 +1,6 @@
-<!--components/classic/movie/index.wxml-->
+<!--components/classic/essay/index.wxml-->
 <view class="classic-container" hidden="{{hidden}}">
   <image class="classic-img" src="{{img}}" />
-  <image class="tag" src="images/movie@tag.png" />
+  <image class="tag" src="images/essay@tag.png" />
   <text class="content">{{content}}</text>
 </view>
