@@ -1,36 +1,42 @@
 import {
   HTTP
-} from '../util/http-p.js'
+} from '../utils/http.js'
 
 class BookModel extends HTTP {
-  getHotList() {
-    return this.request({
-      url: 'book/hot_list'
-    })
+  constructor() {
+    super()
   }
 
-  getMyBookCount() {
-    return this.request({
-      url: '/book/favor/count'
-    })
+  getHotList(success) {
+    var params = {
+      url: 'book/hot_list',
+      success: success
+    }
+    this.request(params)
   }
 
-  getDetail(bid) {
-    return this.request({
-      url: `book/${bid}/detail`
-    })
+  getDetail(bid, success) {
+    let params = {
+      url: 'book/' + bid + '/detail',
+      success: success
+    }
+    this.request(params)
   }
 
-  getLikeStatus(bid){
-    return this.request({
-      url: `book/${bid}/favor`
-    })
+  getLikeStatus(bid, success) {
+    let params = {
+      url: '/book/' + bid + '/favor',
+      success: success
+    }
+    this.request(params)
   }
 
-  getComments(bid){
-    return this.request({
-      url: `book/${bid}/short_comment`
-    })
+  getMyBookCount(success) {
+    let params = {
+      url: '/book/favor/count',
+      success: success
+    }
+    this.request(params)
   }
 }
 

@@ -1,27 +1,35 @@
-// components/book/index.js
+// components/book/normal/book-normal.js
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    book: Object
+    book: Object,
+    showLike:{
+      type:Boolean,
+      value:true
+    }
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-
+    title:String,
+    author:String,
+    img:String
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    onTap(event){
-      const bid = this.properties.book.id
+    onTap:function(event){
+      this.triggerEvent('booktap', {
+        bid:this.properties.book.id
+      }, {})
       wx.navigateTo({
-        url: `/pages/book-detail/book-detail?bid=${bid}`
+        url: '../../pages/detail/detail?bid='+this.properties.book.id,
       })
     }
   }

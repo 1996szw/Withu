@@ -1,11 +1,6 @@
-// pages/classic.js
-import {
-  ClassicModel
-} from '../../models/classic.js'
-import {
-  LikeModel
-} from '../../models/like.js'
-
+// pages/classic/classic.js
+import {ClassicModel} from '../../models/classic.js'
+import { LikeModel } from '../../models/like.js'
 let classicModel = new ClassicModel()
 let likeModel = new LikeModel()
 
@@ -15,108 +10,74 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classic: null,
-    latest: true,
-    first: false,
-    likeCount: 0,
-    likeStatus: false
+    classic:null,
+    latest:true,
+    first:false,
+    like:false,
+    count:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    classicModel.getLatest((res) => {
+    classicModel.getLatest((data)=>{
+      this._getLikeStatus(data.id, data.type)
       this.setData({
-        classic: res,
-        likeCount: res.fav_nums,
-        likeStatus: res.like_status
+        classic:data
       })
     })
   },
-  /**
-   * 自定义事件
-   */
-  onLike: function (e) {
-    let behavior = e.detail.behavior
-    likeModel.like(behavior, this.data.classic.id, this.data.classic.type)
-  },
 
-  onPrevious: function () {
-    this._updateClassic('previous')
-  },
-
-  onNext: function () {
-    this._updateClassic('next')
-  },
-
-  _updateClassic: function (nextOrPrevious) {
+  onPrevious:function(event){
     let index = this.data.classic.index
-    classicModel.getClassic(index, nextOrPrevious, (res) => {
-      this._getLikeStatus(res.id, res.type)
+    classicModel.getPrevious(index, (data)=>{
+      if(data){
+        this._getLikeStatus(data.id, data.type)
+        this.setData({
+          classic:data,
+          latest: classicModel.isLatest(data.index),
+          first: classicModel.isFirst(data.index)
+        })
+      }
+      else{
+        console.log('not more classic')
+      }
+    })
+  },
+
+  onNext:function(event){
+    let index = this.data.classic.index
+    classicModel.getNext(index, (data)=>{
+      if (data) {
+        this._getLikeStatus(data.id, data.type)
+        this.setData({
+          classic: data,
+          latest: classicModel.isLatest(data.index),
+          first: classicModel.isFirst(data.index)
+        })
+      }
+      else {
+        console.log('not more classic')
+      }
+    })
+  },
+
+  onLike:function(event){
+    let like_or_cancel = event.detail.behavior
+    likeModel.like(like_or_cancel, this.data.classic.id, this.data.classic.type)
+  },
+
+  _getLikeStatus:function(cid, type){
+    likeModel.getClassicLikeStatus(cid, type, (data)=>{
       this.setData({
-        classic: res,
-        latest: classicModel.isLatest(res.index),
-        first: classicModel.isFirst(res.index)
+        like:data.like_status,
+        count:data.fav_nums
       })
     })
   },
 
-  _getLikeStatus: function (artID,category,sCallback) {
-    likeModel.getClassicLikeStatus(artID, category, (res) => {
-      this.setData({
-        likeCount: res.fav_nums,
-        likeStatus: res.like_status
-      })
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  onShareAppMessage(){
 
   }
 })

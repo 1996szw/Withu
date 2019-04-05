@@ -1,10 +1,11 @@
-const classicBeh = Behavior({
+let classicBehavior = Behavior({
   properties: {
-    hidden: Boolean,
-    img: String,
-    content: String
+    type:String,
+    img:String,
+    content:String
   },
-  data: {}
+  data: {
+  }
 })
 
-export {classicBeh}
+export { classicBehavior }

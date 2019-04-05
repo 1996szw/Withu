@@ -3,36 +3,41 @@
     "pages/classic/classic",
     "pages/book/book",
     "pages/my/my",
-    "pages/book-detail/book-detail"
+    "pages/detail/detail",
+    "pages/classic-detail/index",
+    "pages/about/about",
+    "pages/course/course"
   ],
   "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "林深见🦌",
     "navigationBarTextStyle": "black",
-    "enablePollDownRefresh": false
+    "navigationStyle": "default"
   },
   "tabBar": {
+    "borderStyle": "black",
     "selectedColor": "#000000",
     "backgroundColor": "#ffffff",
     "color": "#c7c7c7",
     "list": [
       {
-        "selectedIconPath": "/images/tab/classic@highlight.png",
         "pagePath": "pages/classic/classic",
-        "text": "流行",
-        "iconPath": "/images/tab/classic.png"
+        "selectedIconPath": "/images/tab/classic@highlight.png",
+        "iconPath": "/images/tab/classic.png",
+        "text": "流行"
       },
       {
-        "selectedIconPath": "/images/tab/book@highlight.png",
         "pagePath": "pages/book/book",
-        "text": "书籍",
-        "iconPath": "/images/tab/book.png"
+        "selectedIconPath": "/images/tab/book@highlight.png",
+        "iconPath": "/images/tab/book.png",
+        "text": "书单"
       },
       {
-        "selectedIconPath": "/images/tab/my@highlight.png",
         "pagePath": "pages/my/my",
-        "text": "喜欢",
-        "iconPath": "/images/tab/my.png"
+        "selectedIconPath": "/images/tab/my@highlight.png",
+        "iconPath": "/images/tab/my.png",
+        "text": "喜欢"
       }
     ]
   }
