@@ -32,7 +32,9 @@ Component({
    */
   data: {
     disLeftSrc: 'images/triangle.dis@left.png',
-    highLeftSrc: 'images/triangle@left.png'
+    disRightSrc: 'images/triangle.dis@right.png',
+    highLeftSrc: 'images/triangle@left.png',
+    highRightSrc: 'images/triangle@right.png',
   },
 
   /**
